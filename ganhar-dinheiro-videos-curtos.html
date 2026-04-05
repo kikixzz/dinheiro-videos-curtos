@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Completo — Ganhar Dinheiro com Vídeos Curtos</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --preto: #0a0a0a;
+  --escuro: #111111;
+  --card: #161616;
+  --borda: #222222;
+  --verde: #00ff87;
+  --verde-escuro: #00c96a;
+  --amarelo: #ffe135;
+  --branco: #f0f0f0;
+  --cinza: #888888;
+  --cinza-claro: #cccccc;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--preto);
+  color: var(--branco);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* CURSOR */
+*, a { cursor: default; }
+
+/* BARRA DE PROGRESSO */
+#progresso {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(to right, var(--verde), var(--amarelo));
+  z-index: 1000;
+  transition: width 0.1s;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--borda);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  color: var(--verde);
+}
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cinza);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--verde); cursor: pointer; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 5% 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,135,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,225,53,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--verde);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s forwards;
+}
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.4s forwards;
+}
+.hero h1 span { color: var(--verde); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--cinza-claro);
+  max-width: 600px;
+  margin-bottom: 50px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.6s forwards;
+}
+.hero-stats {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.8s forwards;
+}
+.stat { border-left: 2px solid var(--verde); padding-left: 20px; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--verde);
+  line-height: 1;
+}
+.stat-label { font-size: 0.8rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.1em; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+}
+.scroll-ind span { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--cinza); text-transform: uppercase; }
+.scroll-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--verde);
+  animation: bounce 1.5s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* SEÇÕES */
+section { padding: 100px 5%; }
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--verde);
+  letter-spacing: 0.3em;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+.section-title span { color: var(--verde); }
+.section-intro {
+  font-size: 1.1rem;
+  color: var(--cinza-claro);
+  max-width: 700px;
+  margin-bottom: 60px;
+  line-height: 1.8;
+}
+
+/* LINHA DIVISÓRIA */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--verde), transparent);
+  margin: 0 5%;
+  opacity: 0.3;
+}
+
+/* CARDS */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.card:hover { border-color: var(--verde); transform: translateY(-4px); }
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--verde), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover::before { opacity: 1; }
+.card-icon { font-size: 2rem; margin-bottom: 20px; }
+.card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  color: var(--branco);
+}
+.card p { font-size: 0.95rem; color: var(--cinza-claro); line-height: 1.7; }
+.card-tag {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--verde);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* PLATAFORMAS */
+.plataformas { background: var(--escuro); }
+.plataforma-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--borda);
+  max-width: 1100px;
+}
+.plataforma-item:last-child { border-bottom: none; }
+.plat-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+}
+.plat-desc { font-size: 0.95rem; color: var(--cinza-claro); line-height: 1.8; }
+.plat-ganho {
+  text-align: right;
+}
+.plat-valor {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  color: var(--verde);
+  line-height: 1;
+}
+.plat-label { font-size: 0.75rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.1em; }
+.plat-dif {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+}
+.dif-facil { background: rgba(0,255,135,0.1); color: var(--verde); }
+.dif-medio { background: rgba(255,225,53,0.1); color: var(--amarelo); }
+.dif-dificil { background: rgba(255,80,80,0.1); color: #ff5050; }
+
+/* PASSO A PASSO */
+.steps { counter-reset: step; }
+.step-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 40px;
+  padding: 50px 0;
+  border-bottom: 1px solid var(--borda);
+  max-width: 900px;
+  align-items: start;
+}
+.step-item:last-child { border-bottom: none; }
+.step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: var(--borda);
+  line-height: 1;
+  counter-increment: step;
+  transition: color 0.3s;
+}
+.step-item:hover .step-num { color: var(--verde); }
+.step-content h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.step-content p { font-size: 0.95rem; color: var(--cinza-claro); line-height: 1.8; margin-bottom: 16px; }
+.step-tip {
+  background: rgba(0,255,135,0.05);
+  border-left: 3px solid var(--verde);
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--cinza-claro);
+  font-style: italic;
+}
+
+/* MONETIZAÇÃO */
+.monetizacao { background: var(--escuro); }
+.mono-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2px;
+  max-width: 1200px;
+}
+.mono-item {
+  background: var(--card);
+  padding: 40px 30px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.mono-item:hover { background: #1a1a1a; }
+.mono-rank {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--cinza);
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+.mono-item h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+.mono-item p { font-size: 0.9rem; color: var(--cinza-claro); line-height: 1.7; }
+.mono-potencial {
+  margin-top: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--verde);
+}
+
+/* ERROS */
+.erros-list { max-width: 800px; }
+.erro-item {
+  display: flex;
+  gap: 24px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--borda);
+  align-items: start;
+}
+.erro-item:last-child { border-bottom: none; }
+.erro-x {
+  font-size: 1.2rem;
+  color: #ff5050;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.erro-content h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.erro-content p { font-size: 0.9rem; color: var(--cinza-claro); line-height: 1.7; }
+.erro-fix {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--verde);
+  font-style: italic;
+}
+
+/* TABELA */
+.tabela-wrap { overflow-x: auto; max-width: 1000px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+th {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cinza);
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--borda);
+}
+td {
+  padding: 20px;
+  border-bottom: 1px solid var(--borda);
+  color: var(--cinza-claro);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+td:first-child { color: var(--branco); font-weight: 500; }
+.check { color: var(--verde); }
+.cross { color: #ff5050; }
+
+/* BLOCO DESTAQUE */
+.destaque {
+  background: linear-gradient(135deg, rgba(0,255,135,0.08), rgba(0,255,135,0.02));
+  border: 1px solid rgba(0,255,135,0.2);
+  border-radius: 4px;
+  padding: 50px;
+  max-width: 900px;
+  margin: 60px 0;
+}
+.destaque h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  color: var(--verde);
+}
+.destaque p { font-size: 1rem; color: var(--cinza-claro); line-height: 1.8; }
+.destaque ul {
+  margin-top: 20px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.destaque ul li {
+  font-size: 0.95rem;
+  color: var(--cinza-claro);
+  padding-left: 20px;
+  position: relative;
+}
+.destaque ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--verde);
+}
+
+/* FERRAMENTAS */
+.ferramentas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 1000px;
+}
+.ferramenta {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  padding: 24px;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+.ferramenta:hover { border-color: var(--verde); }
+.ferr-nome { font-weight: 500; margin-bottom: 6px; }
+.ferr-tipo {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--verde);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ferr-desc { font-size: 0.85rem; color: var(--cinza); }
+.ferr-preco {
+  margin-top: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--amarelo);
+}
+
+/* FAQ */
+.faq-list { max-width: 800px; }
+.faq-item {
+  border-bottom: 1px solid var(--borda);
+  overflow: hidden;
+}
+.faq-pergunta {
+  padding: 24px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.3s;
+  user-select: none;
+}
+.faq-pergunta:hover { color: var(--verde); cursor: pointer; }
+.faq-icon { color: var(--verde); font-size: 1.2rem; transition: transform 0.3s; }
+.faq-icon.aberto { transform: rotate(45deg); }
+.faq-resposta {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s;
+  font-size: 0.95rem;
+  color: var(--cinza-claro);
+  line-height: 1.8;
+}
+.faq-resposta.aberta { max-height: 300px; padding-bottom: 24px; }
+
+/* CTA FINAL */
+.cta-final {
+  background: var(--escuro);
+  text-align: center;
+  padding: 120px 5%;
+  position: relative;
+  overflow: hidden;
+}
+.cta-final::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,255,135,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-final h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.9;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+.cta-final h2 span { color: var(--verde); }
+.cta-final p { font-size: 1.1rem; color: var(--cinza-claro); max-width: 500px; margin: 0 auto 40px; }
+.btn {
+  display: inline-block;
+  background: var(--verde);
+  color: var(--preto);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+.btn:hover { background: var(--verde-escuro); transform: translateY(-2px); }
+
+/* RODAPÉ */
+footer {
+  background: #050505;
+  padding: 40px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--borda);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--verde);
+  letter-spacing: 0.1em;
+}
+footer p { font-size: 0.8rem; color: var(--cinza); }
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .plataforma-item { grid-template-columns: 1fr; gap: 16px; }
+  .plat-ganho { text-align: left; }
+  .step-item { grid-template-columns: 50px 1fr; gap: 20px; }
+  .step-num { font-size: 2.5rem; }
+  nav .nav-links { display: none; }
+  .hero-stats { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div id="progresso"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">💰 CurtoEDinheiro</div>
+  <ul class="nav-links">
+    <li><a href="#plataformas">Plataformas</a></li>
+    <li><a href="#como-comecar">Como Começar</a></li>
+    <li><a href="#monetizacao">Monetização</a></li>
+    <li><a href="#ferramentas">Ferramentas</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">// Guia Completo 2024</p>
+  <h1>GANHE <span>DINHEIRO</span><br>COM VÍDEOS<br>CURTOS</h1>
+  <p class="hero-sub">O guia mais completo em português sobre como transformar vídeos de 60 segundos em renda real — do zero até a monetização.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">R$15k</div>
+      <div class="stat-label">Média mensal criadores BR</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Principais plataformas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">30d</div>
+      <div class="stat-label">Para primeiros resultados</div>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <span>Rola pra baixo</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- O QUE É -->
+<section id="o-que-e">
+  <p class="section-num reveal">// 01 — Entendendo o Mercado</p>
+  <h2 class="section-title reveal">POR QUE VÍDEOS<br><span>CURTOS</span> PAGAM?</h2>
+  <p class="section-intro reveal">Vídeos curtos são o formato que mais cresce na internet. As plataformas precisam de criadores, e pagam por isso. Entender o mecanismo é o primeiro passo.</p>
+
+  <div class="cards-grid">
+    <div class="card reveal">
+      <div class="card-icon">📱</div>
+      <h3>Atenção Fragmentada</h3>
+      <p>As pessoas consomem conteúdo em momentos curtos — no ônibus, no banheiro, no intervalo. Vídeos de 60 a 90 segundos se encaixam perfeitamente nesse comportamento. Quem entrega isso, ganha.</p>
+      <span class="card-tag">Comportamento</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🤖</div>
+      <h3>Algoritmo Favorece</h3>
+      <p>TikTok, Reels e Shorts distribuem vídeos curtos organicamente muito mais do que conteúdo longo. Você não precisa de seguidores pra viralizar — o algoritmo distribui sozinho se o conteúdo for bom.</p>
+      <span class="card-tag">Alcance</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">💸</div>
+      <h3>Plataformas Pagam</h3>
+      <p>TikTok, YouTube e Instagram pagam diretamente criadores por visualizações. Além disso, marcas investem bilhões em publicidade nesse formato. O dinheiro já está no mercado esperando por criadores.</p>
+      <span class="card-tag">Monetização</span>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🌍</div>
+      <h3>Mercado em Crescimento</h3>
+      <p>O Brasil é o 2º país que mais consome conteúdo no TikTok no mundo. Criadores brasileiros têm vantagem enorme por atender um mercado gigante e ainda subexplorado profissionalmente.</p>
+      <span class="card-tag">Oportunidade</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PLATAFORMAS -->
+<section id="plataformas" class="plataformas">
+  <p class="section-num reveal">// 02 — Onde Postar</p>
+  <h2 class="section-title reveal">AS <span>PLATAFORMAS</span><br>E O QUE PAGAM</h2>
+  <p class="section-intro reveal">Cada plataforma tem regras, requisitos e formas de pagamento diferentes. Conheça todas antes de escolher onde focar.</p>
+
+  <div class="plataforma-item reveal">
+    <div>
+      <div class="plat-nome">🎵 TikTok</div>
+      <div class="plat-dif dif-facil">Fácil de viralizar</div>
+    </div>
+    <div class="plat-desc">
+      O TikTok paga através do <strong>Creator Rewards Program</strong>. Para entrar, você precisa de mínimo 10 mil seguidores e 100 mil visualizações nos últimos 30 dias. O pagamento varia entre R$0,02 e R$0,06 por mil views, mas o verdadeiro dinheiro vem de patrocínios e lives. O algoritmo é o mais poderoso: qualquer vídeo pode viralizar independente do tamanho do canal. Ideal pra quem está começando do zero.
+    </div>
+    <div class="plat-ganho">
+      <div class="plat-valor">R$50–500</div>
+      <div class="plat-label">por 1M de views</div>
+    </div>
+  </div>
+
+  <div class="plataforma-item reveal">
+    <div>
+      <div class="plat-nome">▶️ YouTube Shorts</div>
+      <div class="plat-dif dif-medio">Médio</div>
+    </div>
+    <div class="plat-desc">
+      O YouTube paga Shorts pelo <strong>YouTube Partner Program</strong>. Requisito: 500 inscritos e 3 mil horas assistidas — ou 3 milhões de views em Shorts nos últimos 90 dias. O pagamento é mais estável que o TikTok e a vantagem é que seu canal cresce junto com os vídeos longos. Criadores que fazem Shorts e vídeos longos ganham muito mais. A plataforma paga em dólar, o que beneficia criadores BR.
+    </div>
+    <div class="plat-ganho">
+      <div class="plat-valor">R$100–800</div>
+      <div class="plat-label">por 1M de views</div>
+    </div>
+  </div>
+
+  <div class="plataforma-item reveal">
+    <div>
+      <div class="plat-nome">📸 Instagram Reels</div>
+      <div class="plat-dif dif-dificil">Concorrido</div>
+    </div>
+    <div class="plat-desc">
+      O Instagram não paga diretamente por views em Reels atualmente. O dinheiro vem de <strong>publicidade paga por marcas</strong>, parcerias e o link na bio. A vantagem é a integração com o público mais velho e o mercado de influência mais desenvolvido. Reels funcionam melhor como complemento ao TikTok ou YouTube do que como plataforma principal de monetização.
+    </div>
+    <div class="plat-ganho">
+      <div class="plat-valor">R$0</div>
+      <div class="plat-label">direto (marcas pagam)</div>
+    </div>
+  </div>
+
+  <div class="destaque reveal">
+    <h3>Estratégia Recomendada</h3>
+    <p>Não escolha apenas uma plataforma. Crie o vídeo uma vez e poste em todas. O esforço é o mesmo, o alcance triplica. Comece pelo TikTok para crescer rápido, adicione YouTube Shorts para monetização estável, e use Instagram para fechar patrocínios.</p>
+    <ul>
+      <li>Crie no CapCut → poste no TikTok → reposte no Shorts → reposte nos Reels</li>
+      <li>Remova a marca d'água do TikTok antes de postar no YouTube e Instagram</li>
+      <li>Adapte a legenda pra cada plataforma, mas o vídeo pode ser o mesmo</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMO COMEÇAR -->
+<section id="como-comecar">
+  <p class="section-num reveal">// 03 — Passo a Passo</p>
+  <h2 class="section-title reveal">COMO <span>COMEÇAR</span><br>DO ZERO</h2>
+  <p class="section-intro reveal">Sem enrolação. Esses são os passos reais para criar um canal do zero e chegar na monetização em 30 a 90 dias.</p>
+
+  <div class="steps">
+    <div class="step-item reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Escolha um Nicho Específico</h3>
+        <p>Não tente fazer de tudo. Canais que crescem rápido têm um tema claro — histórias do Reddit, curiosidades de crime, receitas rápidas, motivação, humor. O algoritmo precisa saber pra quem te recomendar. Quanto mais específico, mais rápido você cresce.</p>
+        <p>Pense no nicho como a promessa implícita do seu canal: quando alguém te segue, o que exatamente eles estão esperando ver?</p>
+        <div class="step-tip">💡 Nichos que funcionam muito bem no BR: histórias do Reddit, true crime, curiosidades históricas, motivação, finanças pessoais e humor situacional.</div>
+      </div>
+    </div>
+
+    <div class="step-item reveal">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Crie sua Identidade Visual</h3>
+        <p>Nome do canal, foto de perfil, paleta de cores e estilo de legenda. Tudo isso junto cria reconhecimento. Quando alguém vê seu vídeo sem olhar o nome, precisa saber que é seu.</p>
+        <p>Use o Canva para criar uma identidade visual consistente. Defina uma fonte, uma cor principal e um estilo de thumbnail/capa e use sempre o mesmo.</p>
+        <div class="step-tip">💡 Canais com identidade visual consistente têm taxa de retenção de seguidores até 3x maior do que canais genéricos.</div>
+      </div>
+    </div>
+
+    <div class="step-item reveal">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Produza os Primeiros 10 Vídeos</h3>
+        <p>Não espere o vídeo perfeito. Os primeiros 10 vídeos são aprendizado. Poste todos, analise o que funcionou melhor e repita. Quem demora pra começar por medo de qualidade nunca começa.</p>
+        <p>Fórmula básica: gancho forte nos 3 primeiros segundos + conteúdo de valor + call to action no final. Simples assim.</p>
+        <div class="step-tip">💡 Use o CapCut para editar. Adicione legendas automáticas, fundo de gameplay e narração de voz. É gratuito e é o que a maioria dos criadores BR usa.</div>
+      </div>
+    </div>
+
+    <div class="step-item reveal">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Poste Todo Dia por 30 Dias</h3>
+        <p>Consistência bate qualidade no começo. O algoritmo precisa de dados pra te distribuir. Postar todo dia por 30 dias dá ao algoritmo informação suficiente pra entender quem é seu público e começar a te recomendar.</p>
+        <p>Horários ideais para público BR: 12h, 19h e 21h. Se for postar uma vez por dia, escolha 19h.</p>
+        <div class="step-tip">💡 Grave vídeos em lote — grave 7 vídeos num domingo e poste um por dia. Assim você mantém consistência sem pressão diária.</div>
+      </div>
+    </div>
+
+    <div class="step-item reveal">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <h3>Analise e Ajuste</h3>
+        <p>Depois de 30 dias, olhe os dados. Quais vídeos tiveram mais views? Mais comentários? Mais seguidores novos? O que esses vídeos têm em comum? Faça mais do que funcionou.</p>
+        <p>A métrica mais importante no TikTok é o tempo médio de assistência. Se as pessoas largam nos primeiros 3 segundos, mude seu gancho. Se largam no meio, encurte o vídeo.</p>
+        <div class="step-tip">💡 Um vídeo com 70% de retenção tem 10x mais chance de ser distribuído pelo algoritmo do que um com 30%.</div>
+      </div>
+    </div>
+
+    <div class="step-item reveal">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <h3>Solicite a Monetização</h3>
+        <p>Quando atingir os requisitos de cada plataforma, solicite a monetização. No TikTok: 10k seguidores + 100k views em 30 dias. No YouTube: 500 inscritos + 3k horas ou 3M views em Shorts.</p>
+        <p>Enquanto espera os requisitos, já comece a buscar patrocínios. Canais com 1.000 seguidores engajados já conseguem fechar parcerias com marcas menores.</p>
+        <div class="step-tip">💡 Não espere a monetização oficial pra ganhar dinheiro. Patrocínios, afiliados e vendas de produtos próprios podem vir muito antes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MONETIZAÇÃO -->
+<section id="monetizacao" class="monetizacao">
+  <p class="section-num reveal">// 04 — Fontes de Renda</p>
+  <h2 class="section-title reveal">TODAS AS FORMAS<br>DE <span>MONETIZAR</span></h2>
+  <p class="section-intro reveal">Criadores que ganham bem não dependem de uma única fonte. Aqui estão todas as formas de transformar vídeos curtos em dinheiro real.</p>
+
+  <div class="mono-grid reveal">
+    <div class="mono-item">
+      <div class="mono-rank">// 01 — Mais comum</div>
+      <h3>Fundo das Plataformas</h3>
+      <p>TikTok e YouTube pagam diretamente por visualizações. É a renda mais passiva mas também a mais baixa por view. Boa pra quem tem volume alto de vídeos.</p>
+      <div class="mono-potencial">R$50–500 por 1M views</div>
+    </div>
+    <div class="mono-item">
+      <div class="mono-rank">// 02 — Mais lucrativo</div>
+      <h3>Patrocínio de Marcas</h3>
+      <p>Marcas pagam para aparecer no seu vídeo. Um canal com 50k seguidores engajados pode cobrar R$500 a R$3.000 por vídeo patrocinado dependendo do nicho.</p>
+      <div class="mono-potencial">R$500–10.000 por vídeo</div>
+    </div>
+    <div class="mono-item">
+      <div class="mono-rank">// 03 — Escalável</div>
+      <h3>Marketing de Afiliados</h3>
+      <p>Indica produtos e ganha comissão por venda. Hotmart, Amazon, Monetizze. Funciona muito bem em nichos de finanças, saúde, tecnologia e educação.</p>
+      <div class="mono-potencial">5–30% por venda</div>
+    </div>
+    <div class="mono-item">
+      <div class="mono-rank">// 04 — Alta margem</div>
+      <h3>Produto Próprio</h3>
+      <p>E-book, curso, consultoria, preset, template. Você cria uma vez e vende infinitas vezes. É a forma mais lucrativa a longo prazo para criadores de conteúdo.</p>
+      <div class="mono-potencial">Margem de 90%+</div>
+    </div>
+    <div class="mono-item">
+      <div class="mono-rank">// 05 — Imediato</div>
+      <h3>Lives e Presentes</h3>
+      <p>No TikTok, seguidores enviam presentes virtuais durante lives que se convertem em dinheiro real. Criadores de nicho engajado faturam bem com lives semanais.</p>
+      <div class="mono-potencial">R$100–5.000 por live</div>
+    </div>
+    <div class="mono-item">
+      <div class="mono-rank">// 06 — Recorrente</div>
+      <h3>Comunidade Exclusiva</h3>
+      <p>Patreon, canal do Telegram pago, grupo do WhatsApp. Seus fãs mais engajados pagam mensalmente por acesso exclusivo. Renda recorrente e previsível.</p>
+      <div class="mono-potencial">R$20–200 por membro/mês</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ESTRATÉGIAS -->
+<section id="estrategias">
+  <p class="section-num reveal">// 05 — Estratégia de Conteúdo</p>
+  <h2 class="section-title reveal">O QUE FAZE UM<br>VÍDEO <span>VIRALIZAR</span></h2>
+  <p class="section-intro reveal">Viralizar não é sorte. Existe uma estrutura que funciona repetidamente. Aprenda ela e aplique em todos os seus vídeos.</p>
+
+  <div class="tabela-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Elemento</th>
+          <th>O que é</th>
+          <th>Como fazer</th>
+          <th>Importância</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gancho (0–3s)</td>
+          <td>A primeira frase ou imagem que prende a atenção</td>
+          <td>Comece com a parte mais chocante, curiosa ou surpreendente da história</td>
+          <td>🔴 Crítico</td>
+        </tr>
+        <tr>
+          <td>Retenção</td>
+          <td>Manter o espectador assistindo até o fim</td>
+          <td>Quebre o ritmo a cada 10–15 segundos. Mude o ângulo, adicione texto na tela, faça uma pergunta</td>
+          <td>🔴 Crítico</td>
+        </tr>
+        <tr>
+          <td>Legendas Animadas</td>
+          <td>Texto na tela que acompanha a narração</td>
+          <td>Use CapCut com legenda automática. Destaque palavras-chave em cores diferentes</td>
+          <td>🟠 Alto</td>
+        </tr>
+        <tr>
+          <td>Fundo Visual</td>
+          <td>O que aparece atrás da narração</td>
+          <td>Gameplay de Minecraft, GTA ou Subway Surfers aumenta retenção em até 40%</td>
+          <td>🟠 Alto</td>
+        </tr>
+        <tr>
+          <td>Áudio</td>
+          <td>Narração e trilha sonora</td>
+          <td>Voz clara, trilha de fundo baixa. Use sons virais do TikTok quando relevante</td>
+          <td>🟡 Médio</td>
+        </tr>
+        <tr>
+          <td>Call to Action</td>
+          <td>O que você pede ao espectador no final</td>
+          <td>"Segue pra parte 2" ou "Comenta o que você faria" geram engajamento e mais alcance</td>
+          <td>🟡 Médio</td>
+        </tr>
+        <tr>
+          <td>Hashtags</td>
+          <td>Tags que categorizam seu conteúdo</td>
+          <td>3–5 hashtags: misture #fyp com tags do seu nicho específico</td>
+          <td>🟢 Baixo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ERROS -->
+<section id="erros" style="background: var(--escuro);">
+  <p class="section-num reveal">// 06 — O Que Não Fazer</p>
+  <h2 class="section-title reveal">ERROS QUE<br><span>DESTROEM</span> CANAIS</h2>
+  <p class="section-intro reveal">A maioria dos canais morre nos primeiros 30 dias por erros evitáveis. Conheça os mais comuns antes de cometê-los.</p>
+
+  <div class="erros-list">
+    <div class="erro-item reveal">
+      <div class="erro-x">✗</div>
+      <div class="erro-content">
+        <h4>Começar sem Definir Nicho</h4>
+        <p>Canais que postam tudo — hoje uma receita, amanhã uma motivação, depois um meme — não crescem. O algoritmo não sabe pra quem te recomendar e seus seguidores não sabem o que esperar.</p>
+        <div class="erro-fix">→ Defina um tema antes de postar o primeiro vídeo e mantenha por pelo menos 60 dias.</div>
+      </div>
+    </div>
+    <div class="erro-item reveal">
+      <div class="erro-x">✗</div>
+      <div class="erro-content">
+        <h4>Ignorar os Primeiros 3 Segundos</h4>
+        <p>Se o início do vídeo for fraco, as pessoas vão embora. O algoritmo interpreta isso como conteúdo ruim e para de distribuir. Um vídeo com gancho fraco pode ter 1.000 views. O mesmo vídeo com gancho forte pode ter 1 milhão.</p>
+        <div class="erro-fix">→ Escreva o gancho primeiro. Começa sempre pela parte mais interessante da história.</div>
+      </div>
+    </div>
+    <div class="erro-item reveal">
+      <div class="erro-x">✗</div>
+      <div class="erro-content">
+        <h4>Desistir Antes de 30 Vídeos</h4>
+        <p>A maioria dos criadores desiste na primeira semana sem resultado. Os primeiros vídeos são sempre ruins. Todo grande criador tem vídeos horríveis no começo do canal. É parte do processo.</p>
+        <div class="erro-fix">→ Se comprometer com pelo menos 30 vídeos antes de avaliar resultados. Um vídeo não define o canal.</div>
+      </div>
+    </div>
+    <div class="erro-item reveal">
+      <div class="erro-x">✗</div>
+      <div class="erro-content">
+        <h4>Copiar Vídeos de Outros Canais</h4>
+        <p>Repostar ou copiar vídeos de outros canais faz o algoritmo suprimir seu conteúdo. O TikTok detecta vídeos duplicados e o YouTube ainda mais. Além do risco de demonetização.</p>
+        <div class="erro-fix">→ Use as ideias e formatos como inspiração, mas crie seu próprio conteúdo do zero.</div>
+      </div>
+    </div>
+    <div class="erro-item reveal">
+      <div class="erro-x">✗</div>
+      <div class="erro-content">
+        <h4>Não Responder Comentários</h4>
+        <p>O engajamento nas primeiras 2 horas após postar é crucial. O algoritmo usa curtidas, comentários e compartilhamentos como sinal de qualidade. Ignorar comentários desperdiça essa janela de oportunidade.</p>
+        <div class="erro-fix">→ Fique disponível nas 2 horas após postar para responder todos os comentários.</div>
+      </div>
+    </div>
+    <div class="erro-item reveal">
+      <div class="erro-x">✗</div>
+      <div class="erro-content">
+        <h4>Depender Só do Fundo das Plataformas</h4>
+        <p>O pagamento por view das plataformas é baixo e instável. Criadores que dependem só disso nunca chegam a uma renda significativa. As maiores rendas vêm de patrocínios e produtos próprios.</p>
+        <div class="erro-fix">→ Desde o início, construa uma estratégia com pelo menos 2 ou 3 fontes de renda diferentes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FERRAMENTAS -->
+<section id="ferramentas">
+  <p class="section-num reveal">// 07 — Arsenal do Criador</p>
+  <h2 class="section-title reveal">FERRAMENTAS<br><span>ESSENCIAIS</span></h2>
+  <p class="section-intro reveal">Você não precisa de equipamento caro. Essas ferramentas são suficientes para criar conteúdo profissional com o celular que você já tem.</p>
+
+  <div class="ferramentas-grid">
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">CapCut</div>
+      <div class="ferr-tipo">Edição de Vídeo</div>
+      <div class="ferr-desc">Edição completa, legenda automática, narração por IA, templates virais. O mais usado por criadores BR.</div>
+      <div class="ferr-preco">Gratuito</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">ElevenLabs</div>
+      <div class="ferr-tipo">Narração IA</div>
+      <div class="ferr-desc">Vozes sintéticas mais naturais do mercado. Perfeito para histórias do Reddit e conteúdo narrado.</div>
+      <div class="ferr-preco">Grátis / $5 mês</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">Canva</div>
+      <div class="ferr-tipo">Design</div>
+      <div class="ferr-desc">Criação de thumbnails, identidade visual, capas e artes para redes sociais.</div>
+      <div class="ferr-preco">Grátis / R$55 mês</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">Reddit Post Generator</div>
+      <div class="ferr-tipo">Conteúdo</div>
+      <div class="ferr-desc">Gera prints falsos de posts do Reddit para usar como fundo nos vídeos de histórias.</div>
+      <div class="ferr-preco">Gratuito</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">TikTok Analytics</div>
+      <div class="ferr-tipo">Análise</div>
+      <div class="ferr-desc">Dados de retenção, alcance e desempenho dos seus vídeos. Disponível nativamente no app.</div>
+      <div class="ferr-preco">Gratuito</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">Notion</div>
+      <div class="ferr-tipo">Organização</div>
+      <div class="ferr-desc">Calendário editorial, banco de ideias, roteiros e controle de publicações. Essencial pra consistência.</div>
+      <div class="ferr-preco">Grátis / $8 mês</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">Epidemic Sound</div>
+      <div class="ferr-tipo">Música</div>
+      <div class="ferr-desc">Trilhas sonoras sem direitos autorais para usar nos vídeos sem risco de demonetização.</div>
+      <div class="ferr-preco">$15 mês</div>
+    </div>
+    <div class="ferramenta reveal">
+      <div class="ferr-nome">ChatGPT / Claude</div>
+      <div class="ferr-tipo">Roteiros</div>
+      <div class="ferr-desc">Geração de roteiros, ideias de conteúdo, adaptação de histórias e criação de ganchos.</div>
+      <div class="ferr-preco">Grátis / $20 mês</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq" style="background: var(--escuro);">
+  <p class="section-num reveal">// 08 — Dúvidas Frequentes</p>
+  <h2 class="section-title reveal">PERGUNTAS<br><span>FREQUENTES</span></h2>
+  <p class="section-intro reveal">As dúvidas que todo iniciante tem antes de começar.</p>
+
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Preciso aparecer no vídeo para ganhar dinheiro?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        Não. A maioria dos canais que mais crescem no Brasil são faceless — sem mostrar o rosto. Histórias do Reddit, curiosidades narradas, conteúdo animado, gameplay comentado. Você pode construir um canal enorme sem aparecer uma vez sequer.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Quanto tempo leva pra começar a ganhar dinheiro?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        Depende da estratégia. Patrocínios de marcas menores podem vir em 30 a 60 dias se você tiver engajamento bom. A monetização oficial das plataformas leva em média 2 a 4 meses postando com consistência. O primeiro R$1.000 geralmente aparece entre o 2º e o 4º mês para quem posta diariamente.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Posso usar histórias do Reddit sem problemas?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        Tecnicamente, os posts do Reddit pertencem a quem os escreveu. Na prática, a esmagadora maioria dos criadores usa essas histórias sem nenhum problema legal. Para minimizar riscos, adapte o texto, não copie palavra por palavra, e dê crédito ao Reddit sem nomear o usuário específico. Evite histórias de pessoas que possam ser identificadas.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Vale a pena criar canal em inglês ao invés de português?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        O mercado em inglês paga mais por view, mas a concorrência é absurdamente maior. Para quem está começando, o mercado BR tem uma vantagem enorme: é grande, está crescendo rápido e ainda tem poucos criadores profissionais. Recomenda-se começar em português, crescer, e aí expandir pro inglês com o canal já estabelecido.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Precisa de equipamento profissional?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        Não. Para canais faceless (sem aparecer), você não precisa de câmera nenhuma. Um celular intermediário, o CapCut e uma boa narração são suficientes. Investimento inicial real: zero. O celular que você já tem é suficiente para começar hoje.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Quantos seguidores preciso pra monetizar?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        Para o fundo do TikTok: 10 mil seguidores. Para o YouTube Partner Program via Shorts: 500 inscritos + 3 milhões de views em 90 dias. Para patrocínios: não existe mínimo oficial, marcas menores já fecham parcerias com 1.000 a 5.000 seguidores se o engajamento for alto. Para afiliados e produtos próprios: zero seguidores necessários — você pode vender desde o primeiro dia.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        Vale a pena comprar seguidores pra crescer mais rápido?
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-resposta">
+        Nunca. Seguidores comprados não interagem, o que piora brutalmente sua taxa de engajamento. O algoritmo interpreta isso como conteúdo ruim e para de te distribuir. Além disso, marcas verificam engajamento antes de fechar parcerias — um canal com 50k seguidores e 0,1% de engajamento não fecha nada. Crescimento orgânico é mais lento mas é o único que funciona a longo prazo.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>COMEÇA<br><span>HOJE</span></h2>
+  <p>O melhor momento para começar era há seis meses. O segundo melhor momento é agora. Você já tem tudo que precisa.</p>
+  <a class="btn" href="#como-comecar">Ver Passo a Passo →</a>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="footer-logo">CurtoEDinheiro</div>
+  <p>Guia gratuito para criadores brasileiros · 2024</p>
+  <p style="font-size:0.75rem; color: #444;">As estimativas de ganho são médias de mercado e podem variar.</p>
+</footer>
+
+<script>
+// Barra de progresso
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (scrollTop / docHeight) * 100;
+  document.getElementById('progresso').style.width = pct + '%';
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 100);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// FAQ
+function toggleFaq(el) {
+  const resposta = el.nextElementSibling;
+  const icon = el.querySelector('.faq-icon');
+  const aberta = resposta.classList.contains('aberta');
+
+  document.querySelectorAll('.faq-resposta').forEach(r => r.classList.remove('aberta'));
+  document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('aberto'));
+
+  if (!aberta) {
+    resposta.classList.add('aberta');
+    icon.classList.add('aberto');
+  }
+}
+</script>
+</body>
+</html>
